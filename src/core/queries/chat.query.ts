@@ -3,11 +3,6 @@ import { Chat } from "../interfaces/chat.interface";
 import { deleteChat, getChatsByUser, startChat, updateChatName } from "../services/chat.service";
 import { useChatStore } from "../stores/chat.store";
 
-interface UseStartChatOptions {
-    onSuccess?: (newChat: Chat) => void;
-  }
-
-  
 export const useFetchChatsByUser = (userId: string) => {
     return useQuery<Chat[], Error>({
         queryKey: ["chats", userId],
@@ -34,8 +29,6 @@ export const useDeleteChat = () => {
       onSuccess: (newChat) => {
       
        setSelectedChat(newChat);
-        // queryClient.invalidateQueries({ queryKey: ["chats", userId] });
-  
       },
     });
   };

@@ -3,19 +3,15 @@ import { CustomDropdownList } from "@/core/components/ui/CustomDropdown/CustomDr
 import { Category } from "@/core/interfaces/category.interface";
 import clsx from "clsx";
 import { Pencil, Save, Trash2, X } from "lucide-react";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
     category: Category;
     isSelected?: boolean;
     onClick: () => void;
-    editorMode?: boolean;
-    showEditButton?: boolean;
-
-    onStartEditorMode?: () => void;
 };
 
-export const CategoryItem = ({ category, onClick, onStartEditorMode, editorMode = false, showEditButton = true, isSelected = false }: Props) => {
+export const CategoryItem = ({ category, onClick, isSelected = false }: Props) => {
 
     const oldText = category.category;
     const [currentText, setCurrentText] = useState<string>(category.category);

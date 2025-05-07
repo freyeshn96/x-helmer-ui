@@ -17,7 +17,7 @@ export const Dropzone = ({ options, onDrop, acceptedFiles = [], children }: Prop
         }
     }
 
-    const { getRootProps, getInputProps, open } = useDropzone({
+    const { getRootProps, getInputProps } = useDropzone({
         onDrop: handleOnDrop,
         ...options
     });

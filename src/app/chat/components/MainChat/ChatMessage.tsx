@@ -3,7 +3,6 @@
 import { CustomDropdownItemText } from "@/core/components/ui/CustomDropdown/CustomDropdownItemText";
 import { CustomDropdownList } from "@/core/components/ui/CustomDropdown/CustomDropdownList";
 import { CustomDropdownSeparator } from "@/core/components/ui/CustomDropdown/CustomDropdownSeparator";
-import { Ellipse } from "@/core/components/ui/Ellipse7/Ellipse7";
 import { Book } from "lucide-react";
 
 interface Props {

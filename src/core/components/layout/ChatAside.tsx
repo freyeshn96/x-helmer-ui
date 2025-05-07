@@ -16,7 +16,7 @@ export const ChatAside = () => {
     const setIsLeftAsideCollapsed = useUIStore((state) => state.setIsLeftAsideCollapsed);
     const isLeftAsideCollapsed = useUIStore((state) => state.isLeftAsideCollapsed);
 
-    const [isModalUploadDocumentOpen, setIsModalUploadDocumentOpen] = useState<boolean>(false);
+    const [setIsModalUploadDocumentOpen] = useState<boolean>(false);
 
     const handleCollapsed = () => {
         setIsLeftAsideCollapsed(!isLeftAsideCollapsed);

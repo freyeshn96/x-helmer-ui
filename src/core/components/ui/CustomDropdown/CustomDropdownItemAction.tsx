@@ -5,10 +5,9 @@ type Props = {
     text: string;
     onClick: () => void;
     icon?: ReactNode;
-    disabled?: boolean;
   };
   
-  export const CustomDropdownItemAction = ({ text, onClick, icon, disabled }: Props) => {
+  export const CustomDropdownItemAction = ({ text, onClick, icon }: Props) => {
     return (
       <MenuItem as={"div"} onClick={onClick} className={"flex flex-row gap-2 items-center cursor-pointer p-2"}>
         {icon && <span className="mr-2 font-semibold">{icon}</span>}

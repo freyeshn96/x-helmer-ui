@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/core/hooks/useAuth";
 import { ChatAside } from "./ChatAside";
-import { ReactQueryProvider } from "@/core/providers/react-query.provider";
 import { DocumentAsideBar } from "./DocumentAsideBar/DocumentAsideBar";
 
 interface Props {

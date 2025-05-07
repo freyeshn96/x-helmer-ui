@@ -1,11 +1,6 @@
 import { create } from "zustand";
 import { Chat } from "../interfaces/chat.interface";
 
-interface Document {
-  name: string;
-  doc_id: string;
-}
-
 interface ChatStore {
   selectedChat?: Chat;
   chats: Chat[];

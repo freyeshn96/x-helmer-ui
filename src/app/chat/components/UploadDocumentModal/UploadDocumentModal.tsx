@@ -1,11 +1,9 @@
 import { InputButton } from "@/core/components/ui/InputButton/InputButton";
 import { ModalDialog } from "@/core/components/ui/ModalDialog/ModalDialog";
 import { Plus } from "lucide-react";
-import Dropzone from "react-dropzone";
 import { DropzoneDocuments } from "../DropzoneDocuments/DropzoneDocuments";
 import { useAuth } from "@/core/hooks/useAuth";
 import { useFetchDocumentCategoriesByUser } from "@/core/queries/category.query";
-import { DocumentItem } from "@/core/components/layout/DocumentAsideBar/components/DocumentItem";
 import { CategoryItem } from "./CategoryItem";
 import { Category } from "@/core/interfaces/category.interface";
 import { useState } from "react";

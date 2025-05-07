@@ -9,7 +9,7 @@ interface Props {
 
 export const DropzoneDocuments = ({ category }: Props) => {
 
-    const [acceptedFiles, setAcceptedFiles] = useState<File[]>([]);
+    const [acceptedFiles] = useState<File[]>([]);
 
     const options: DropzoneOptions = {
         noClick: true,
@@ -21,7 +21,7 @@ export const DropzoneDocuments = ({ category }: Props) => {
         },
     };
 
-    const handleOnDrop = (files: File[]) => {
+    const handleOnDrop = () => {
        
     }
 
