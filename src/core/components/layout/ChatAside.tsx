@@ -8,7 +8,6 @@ import Image from "next/image";
 import { InputButton } from "../ui/InputButton/InputButton";
 import { ChatHistory } from "@/app/chat/components/ChatHistory/ChatHistory";
 import Link from "next/link";
-import { useState } from "react";
 import { UploadDocumentModal } from "@/app/chat/components/UploadDocumentModal/UploadDocumentModal";
 
 export const ChatAside = () => {
@@ -16,18 +15,17 @@ export const ChatAside = () => {
     const setIsLeftAsideCollapsed = useUIStore((state) => state.setIsLeftAsideCollapsed);
     const isLeftAsideCollapsed = useUIStore((state) => state.isLeftAsideCollapsed);
 
-    const [setIsModalUploadDocumentOpen] = useState<boolean>(false);
-
+  
     const handleCollapsed = () => {
         setIsLeftAsideCollapsed(!isLeftAsideCollapsed);
     }
 
     const handleOpenModalUploadDocument = () => {
-        setIsModalUploadDocumentOpen(true);
+       
     };
 
     const handleCloseUploadDocumentModal = () => {
-        setIsModalUploadDocumentOpen(false);
+        
     }
 
     return (
