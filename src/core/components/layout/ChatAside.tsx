@@ -64,7 +64,7 @@ export const ChatAside = () => {
                 isLeftAsideCollapsed ? "flex flex-row justify-center" : "",
             )}>
                 <InputButton showOnlyIcon={isLeftAsideCollapsed} text="Upload" className="w-full" icon={<Upload></Upload>} onClick={handleOpenModalUploadDocument}></InputButton>
-                <UploadDocumentModal onClose={handleCloseUploadDocumentModal} isOpen={true}></UploadDocumentModal>
+                <UploadDocumentModal onClose={handleCloseUploadDocumentModal} isOpen={false}></UploadDocumentModal>
             </div>
            
            <ChatHistory className="flex flex-col flex-grow h-[90%] overflow-y-auto"></ChatHistory>
