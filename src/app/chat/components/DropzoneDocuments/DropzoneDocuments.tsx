@@ -1,15 +1,19 @@
 import { Category } from "@/core/interfaces/category.interface";
+import { DocumentUpload } from "@/core/interfaces/document-upload.interface";
+import { getStatusDocument, uploadDocument } from "@/core/services/document.service";
 import { FileUp, Upload } from "lucide-react";
 import { useState } from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 
 interface Props {
+    userId: string,
     category?: Category
 };
 
-export const DropzoneDocuments = ({ category }: Props) => {
+export const DropzoneDocuments = ({ userId, category }: Props) => {
 
-    const [acceptedFiles] = useState<File[]>([]);
+    const [acceptedFiles, setAcceptedFiles] = useState<File[]>([]);
+    const [currentProgress, setCurrentProgress] = useState<number>(0);
 
     const options: DropzoneOptions = {
         noClick: true,
@@ -21,14 +25,52 @@ export const DropzoneDocuments = ({ category }: Props) => {
         },
     };
 
-    const handleOnDrop = () => {
-       
+    const handleOnDrop = (acceptedFiles: File[]) => {
+        setAcceptedFiles(acceptedFiles);
+        handleUploadAndTrackStatus(acceptedFiles[0])
     }
 
     const { getRootProps, getInputProps, open } = useDropzone({
         onDrop: handleOnDrop,
         ...options
     });
+
+    const files = acceptedFiles.map(file => (
+        <li key={file.name}>
+            {file.name} - {file.size} bytes
+        </li>
+    ));
+
+
+    const handleUploadAndTrackStatus = async (file: File) => {
+        if (!userId || !category) return;
+
+        const uploadResponse = await uploadDocument(userId, category.category, file);
+        console.log("Upload response:", uploadResponse);
+
+        const documentId = uploadResponse.doc_id;
+
+        console.log("Subiendo archivo con id:", documentId);
+        console.log("Categoria:", category.category);
+        console.log("Usuario:", userId);
+        while (true) {
+            const statusResponse = await getStatusDocument(documentId);
+
+            console.log("Status response:", statusResponse);
+
+            if (statusResponse.statusCode == 200 && statusResponse.status?.percentage == undefined) {
+                setCurrentProgress(100);
+                setAcceptedFiles([]); // Reset the accepted files state
+                break;
+            }
+
+            setCurrentProgress(statusResponse.status?.percentage ?? 0);
+
+
+            await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before checking again
+        }
+    }
+
 
     return (
         <div
@@ -41,6 +83,8 @@ export const DropzoneDocuments = ({ category }: Props) => {
                         {!category && (
                             <span>First, you need to select a category</span>
                         )}
+
+
                         {acceptedFiles?.length == 0 && category && (<>
                             <FileUp className="text-[#BDDDFF]" size={89}></FileUp>
                             <span>Drag & drop file to upload or</span>
@@ -49,6 +93,13 @@ export const DropzoneDocuments = ({ category }: Props) => {
                                 <Upload></Upload>
                             </button>
                         </>)}
+
+                        {acceptedFiles?.length > 0 && category && (<>
+                            <span>Uploading ({currentProgress}%).</span>
+                            <span>--</span>
+                        </>)}
+
+                        <ul>{files}</ul>
                     </div>
                 </div>
             </div>

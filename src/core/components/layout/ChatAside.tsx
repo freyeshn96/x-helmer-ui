@@ -9,8 +9,11 @@ import { InputButton } from "../ui/InputButton/InputButton";
 import { ChatHistory } from "@/app/chat/components/ChatHistory/ChatHistory";
 import Link from "next/link";
 import { UploadDocumentModal } from "@/app/chat/components/UploadDocumentModal/UploadDocumentModal";
+import { useState } from "react";
 
 export const ChatAside = () => {
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
     const setIsLeftAsideCollapsed = useUIStore((state) => state.setIsLeftAsideCollapsed);
     const isLeftAsideCollapsed = useUIStore((state) => state.isLeftAsideCollapsed);
@@ -21,11 +24,11 @@ export const ChatAside = () => {
     }
 
     const handleOpenModalUploadDocument = () => {
-       
+        setIsModalOpen(true);
     };
 
     const handleCloseUploadDocumentModal = () => {
-        
+        setIsModalOpen(false);
     }
 
     return (
@@ -64,7 +67,7 @@ export const ChatAside = () => {
                 isLeftAsideCollapsed ? "flex flex-row justify-center" : "",
             )}>
                 <InputButton showOnlyIcon={isLeftAsideCollapsed} text="Upload" className="w-full" icon={<Upload></Upload>} onClick={handleOpenModalUploadDocument}></InputButton>
-                <UploadDocumentModal onClose={handleCloseUploadDocumentModal} isOpen={false}></UploadDocumentModal>
+                <UploadDocumentModal onClose={handleCloseUploadDocumentModal} isOpen={isModalOpen}></UploadDocumentModal>
             </div>
            
            <ChatHistory className="flex flex-col flex-grow h-[90%] overflow-y-auto"></ChatHistory>

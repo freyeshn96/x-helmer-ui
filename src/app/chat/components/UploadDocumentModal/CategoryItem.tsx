@@ -9,12 +9,14 @@ interface Props {
     category: Category;
     isSelected?: boolean;
     onClick: () => void;
+    onSaveChanges?: (categoryName: string) => void;
+    showEditButton?: boolean;
 };
 
-export const CategoryItem = ({ category, onClick, isSelected = false }: Props) => {
+export const CategoryItem = ({ category, onClick, onSaveChanges, isSelected = false, showEditButton = false }: Props) => {
 
     const oldText = category.category;
-    const [currentText, setCurrentText] = useState<string>(category.category);
+    const [currentText, setCurrentText] = useState<string>(oldText);
 
     const [isEditorMode, setIsEditorMode] = useState<boolean>(false);
 
@@ -31,14 +33,24 @@ export const CategoryItem = ({ category, onClick, isSelected = false }: Props) =
 
     const handleSaveChanges = () => {
         setIsEditorMode(false);
+        
+        if( onSaveChanges ) {
+            onSaveChanges(currentText);
+        }
     };
     
     useEffect( () => {
-        if( isEditorMode ) {
-            dropdownRef.current?.focus();
+        if( category.isNewCategory ) {
+            setIsEditorMode(true);
+            
         }
-    }, [isEditorMode]);
+    }, [category.isNewCategory]);
 
+
+    useEffect( () => {
+        dropdownRef.current?.focus();
+    }, [isEditorMode]);
+    
     return (
         <div className={clsx(
             "flex flex-row justify-between items-center px-2 cursor-pointer shrink-0 hover:bg-light-blue-primary w-full shadow rounded-md truncate",
@@ -52,7 +64,7 @@ export const CategoryItem = ({ category, onClick, isSelected = false }: Props) =
             {isEditorMode && (
                 <div className="flex flex-row gap-2 bg-white w-full">
                     <input ref={dropdownRef} 
-                        className="w-full h-11 min-h-11" 
+                        className="w-full h-11 min-h-11  focus:outline-0" 
                         placeholder={category.category}
                         value={currentText}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,7 +78,7 @@ export const CategoryItem = ({ category, onClick, isSelected = false }: Props) =
                 </div>
             )}
 
-            {!isEditorMode && (
+            {!isEditorMode && showEditButton && (
                 <CustomDropdownList icon={<Pencil size={16}></Pencil>}>
                     <CustomDropdownItemAction text="Rename" onClick={handleEditButton} icon={<Pencil size={16}></Pencil>}></CustomDropdownItemAction>
                     <CustomDropdownItemAction text="Delete" onClick={onClick} icon={<Trash2 size={16}></Trash2>}></CustomDropdownItemAction>
